@@ -1,7 +1,7 @@
-import React, {  useEffect } from "react";
+import React, { useEffect } from "react";
 import Product from "./shared/Product";
 import { useSelector, useDispatch } from "react-redux";
-import { fetchApi } from "./Redux/Products/ProductsActions";
+import { fetchApi } from "../Redux/Products/ProductsActions";
 
 const Store = () => {
   const productState = useSelector((state) => state.productState);

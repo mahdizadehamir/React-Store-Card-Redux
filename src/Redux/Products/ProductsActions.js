@@ -1,4 +1,4 @@
-import { getProducts } from "../../../services/api";
+import { getProducts } from "../../services/api";
 const fetchRequest = () => {
   return { type: "FETCH_REQUEST_SENT" };
 };

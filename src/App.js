@@ -7,20 +7,20 @@ import ShopCart from "./components/ShopCart";
 import ProductDetails from "./components/ProductDetails";
 import CartContextProvider from "./Context/CartContextProvider";
 import { Provider } from "react-redux";
-import { store } from "./components/Redux/Store";
+import { store } from "./Redux/Store";
 function App() {
   return (
     <div className="App container mx-auto">
       <Provider store={store}>
-          <CartContextProvider>
-            <Navbar />
-            <Routes>
-              <Route path="/products/:id" element={<ProductDetails />} />
-              <Route path="/products" element={<Store />} />
-              <Route path="/cart" element={<ShopCart />} />
-              <Route path="/*" element={<Navigate to="/products" />} />
-            </Routes>
-          </CartContextProvider>
+        <CartContextProvider>
+          <Navbar />
+          <Routes>
+            <Route path="/products/:id" element={<ProductDetails />} />
+            <Route path="/products" element={<Store />} />
+            <Route path="/cart" element={<ShopCart />} />
+            <Route path="/*" element={<Navigate to="/products" />} />
+          </Routes>
+        </CartContextProvider>
       </Provider>
     </div>
   );
