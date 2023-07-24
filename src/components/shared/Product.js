@@ -1,15 +1,22 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 //functions
 import { shorten, isInCart, quantityFilter } from "../../helper/functions";
-//context
-import { CartContext } from "../../Context/CartContextProvider";
 //svg
 import trash from "../../asset/icons/trash.svg";
 //animation
 import "animate.css";
+//redux store and actions
+import { useSelector, useDispatch } from "react-redux";
+import {
+  addItem,
+  decrease,
+  increase,
+  removeItem,
+} from "../../Redux/Cart/CartActions";
 const Product = ({ productData }) => {
-  const { state, dispatch } = useContext(CartContext);
+  const dispatch = useDispatch();
+  const cardState = useSelector((state) => state.cardState);
   return (
     <div className="lg:w-60  w-64 flex flex-col justify-center items-center border-solid border-2 border-gray-400 p-3 bg-white rounded-lg ">
       <img className="w-48 h-52" src={productData.image} alt="product" />
@@ -20,22 +27,16 @@ const Product = ({ productData }) => {
           Details
         </Link>
         <div className="flex flex-row  items-center justify-center h-10">
-          {quantityFilter(state, productData.id) ? (
-            quantityFilter(state, productData.id) > 1 ? (
+          {quantityFilter(cardState, productData.id) ? (
+            quantityFilter(cardState, productData.id) > 1 ? (
               <button
                 className="bg-blue-500 text-white rounded-md px-2 font-black text-center w-10 h-10 text-3xl hover:bg-blue-700 transition-colors"
-                onClick={() =>
-                  dispatch({ type: "DECREASE", payload: productData })
-                }
+                onClick={() => dispatch(decrease(productData))}
               >
                 -
               </button>
             ) : (
-              <button
-                onClick={() =>
-                  dispatch({ type: "REMOVE_ITEM", payload: productData })
-                }
-              >
+              <button onClick={() => dispatch(removeItem(productData))}>
                 <img
                   className="bg-blue-500   font-bold w-10 rounded-md p-2  animate__animated animate__fadeInUp  hover:bg-blue-700 transition-colors "
                   src={trash}
@@ -45,27 +46,23 @@ const Product = ({ productData }) => {
             )
           ) : null}
 
-          {quantityFilter(state, productData.id) && (
+          {quantityFilter(cardState, productData.id) && (
             <span className="text-lg text-center mx-2 text-blue-400 font-extrabold w-4 block">
-              {quantityFilter(state, productData.id)}
+              {quantityFilter(cardState, productData.id)}
             </span>
           )}
 
-          {isInCart(state, productData.id) ? (
+          {isInCart(cardState, productData.id) ? (
             <button
               className="bg-blue-500 text-white rounded-md px-2 font-black text-center w-10 h-10 text-3xl animate__animated animate__fadeInUp  hover:bg-blue-700 transition-colors"
-              onClick={() =>
-                dispatch({ type: "INCREASE", payload: productData })
-              }
+              onClick={() => dispatch(increase(productData))}
             >
               +
             </button>
           ) : (
             <button
               className="px-4 py-2 text-sm font-bold bg-blue-500 text-white rounded hover:bg-blue-700 transition-colors "
-              onClick={() =>
-                dispatch({ type: "ADD_ITEM", payload: productData })
-              }
+              onClick={() => dispatch(addItem(productData))}
             >
               ADD TO CART
             </button>

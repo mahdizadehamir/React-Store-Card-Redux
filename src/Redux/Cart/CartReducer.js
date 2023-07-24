@@ -9,9 +9,14 @@ const sumItems = (items) => {
     (total, product) => total + product.quantity,
     0
   );
+  const totalPrice = items
+    .reduce((total, product) => total + product.quantity * product.price, 0)
+    .toFixed(2);
+
+  return { itemsCounter, totalPrice };
 };
 
-export const CartReducer = (state, action) => {
+export const CartReducer = (state = initialState, action) => {
   switch (action.type) {
     case "ADD_ITEM":
       if (!state.selectedItems.find((item) => item.id === action.payload.id)) {

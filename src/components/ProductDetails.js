@@ -1,13 +1,14 @@
-import React, { useContext } from "react";
-// Context
-import { ProductsContext } from "../Context/ProductsContextProvider";
+import React from "react";
+//router
 import { Link, useParams } from "react-router-dom";
+//redux store
+import { useSelector } from "react-redux";
 
 const ProductDetails = (props) => {
   const params = useParams();
   const id = params.id;
-  const data = useContext(ProductsContext);
-  const product = data[id - 1];
+  const productState = useSelector((state) => state.productState);
+  const product = productState.products[id - 1];
   const { image, title, description, price, category } = product;
   return (
     <div className="flex md:flex-row md:justify-center md:items-center gap-3  flex-col mt-24 bg-white px-2 ">
@@ -19,8 +20,15 @@ const ProductDetails = (props) => {
           Category : <span className="text-black text-lg">{category}</span>
         </p>
         <div className="flex flex-row justify-around ">
-          <span className="bg-green-600 p-3 text-white font-extrabold text-lg rounded-md">{price} $</span>
-          <Link className="text-white bg-blue-500 p-3 text-lg font-extrabold rounded-md" to="/products">Back To Shop</Link>
+          <span className="bg-green-600 p-3 text-white font-extrabold text-lg rounded-md">
+            {price} $
+          </span>
+          <Link
+            className="text-white bg-blue-500 p-3 text-lg font-extrabold rounded-md"
+            to="/products"
+          >
+            Back To Shop
+          </Link>
         </div>
       </div>
     </div>

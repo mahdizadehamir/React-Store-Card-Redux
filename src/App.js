@@ -5,14 +5,12 @@ import Store from "./components/Store";
 import Navbar from "./components/shared/Navbar";
 import ShopCart from "./components/ShopCart";
 import ProductDetails from "./components/ProductDetails";
-import CartContextProvider from "./Context/CartContextProvider";
 import { Provider } from "react-redux";
 import { store } from "./Redux/Store";
 function App() {
   return (
     <div className="App container mx-auto">
       <Provider store={store}>
-        <CartContextProvider>
           <Navbar />
           <Routes>
             <Route path="/products/:id" element={<ProductDetails />} />
@@ -20,7 +18,6 @@ function App() {
             <Route path="/cart" element={<ShopCart />} />
             <Route path="/*" element={<Navigate to="/products" />} />
           </Routes>
-        </CartContextProvider>
       </Provider>
     </div>
   );
