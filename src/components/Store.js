@@ -8,7 +8,9 @@ const Store = () => {
   const productState = useSelector((state) => state.productState);
   const dispatch = useDispatch();
   useEffect(() => {
-    dispatch(fetchApi());
+    if (!productState.products.length) {
+      dispatch(fetchApi());
+    }
   }, []);
   return (
     <div className="flex  md:flex-row lg:flex-row flex-col flex-wrap justify-between mt-32 items-center gap-20 ">
